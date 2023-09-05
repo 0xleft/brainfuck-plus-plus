@@ -1,12 +1,13 @@
-var bong = "hello world"
-print(bong)
+var one
+var two
+var three
 
-var one = 1
-var two = 2
+set one 1
+set two 2
+set three one + two
 
-var three = one + two
-if (three == 3) {
-    print("three is 3")
-} else {
-    print("three is not 3")
-}
+var fizz = "Fizz"
+var buzz = "Buzz"
+var fizzbuzz = "FizzBuzz"
+
+if (three % 3 == 0) {print(fizz)}

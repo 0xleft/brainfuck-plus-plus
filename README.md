@@ -1,1 +1,1 @@
-You need brainfuck interpreter or a compiler that doesnt limit the 
+A brainfuck plus plus this will really fuck your brain but its good. Brainfuck++
