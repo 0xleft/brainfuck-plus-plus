@@ -2,7 +2,7 @@ import argparse
 
 args = argparse.ArgumentParser(description='Interpret a file')
 args.add_argument('file', metavar='file', type=str, nargs=1, help='file to interpret')
-args.add_argument('max_memory', metavar='max_memory', type=int, nargs=1, help='max memory to use')
+args.add_argument('--max-memory', metavar='max-memory', type=int, nargs=1, default=[30000], help='maximum memory')
 args = args.parse_args()
 
 COMP_CHARS = "+ - > < [ ] . ,".split(" ")
