@@ -1,0 +1,1 @@
+You need brainfuck interpreter or a compiler that doesnt limit the 
