@@ -1,9 +1,13 @@
-var int one = 1
-var int two = 2
-var int three = one + two
+var one int = 55
+var two int = 55
 
-var fizz str = "Fizz"
+set one int = one + two
+
+var fizz str = "bingbongdingond"
 var buzz str = "Buzz"
-var fizzbuzz str = fizz + buzz
 
-if (three % 3 == 0) {print(fizz)}
+print fizz
+
+#set fizzbuzz str = fizz + buzz
+
+# if (three % 3 == 0) {print(fizz)}
