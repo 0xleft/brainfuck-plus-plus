@@ -37,7 +37,7 @@ def transpile(code):
             variable_init_value = line.split(" = ")[1]
 
             if line.split(" ")[1] in variables:
-                Exception(f"Variable {variable_name} already defined")
+                raise Exception(f"Variable {variable_name} already defined")
             if variable_type == "int":
                 variables[variable_name] = {
                     "type": "int",
@@ -51,7 +51,7 @@ def transpile(code):
             elif variable_type == "str":
                 # remove the quotes from the string
                 if variable_init_value[0] != "\"" or variable_init_value[-1] != "\"":
-                    Exception(f"Invalid string {variable_init_value}")
+                    raise Exception(f"Invalid string {variable_init_value}")
                 variable_init_value = variable_init_value[1:-1]
                 variables[variable_name] = {
                     "type": "str",
@@ -66,8 +66,7 @@ def transpile(code):
                 bf_code += ">"
                 code_pointer += 1
             else:
-                Exception(f"Invalid variable type {variable_type}")
-            print(f"{code_pointer} {line}")
+                raise Exception(f"Invalid variable type {variable_type}")
 
         # expression instruction
         elif line.startswith("set"):
@@ -77,15 +76,17 @@ def transpile(code):
             expression = line.split(" = ")[1]
             expression = expression.split(" ")
 
+            print(expression_return_variable, variables.keys(), expression_return_variable in variables.keys())
+
             if expression_return_variable in variables.keys():
-                Exception(f"Variable {expression_return_variable} already defined")
+                raise Exception(f"Variable {expression_return_variable} already defined")
 
         # print variable instruction
         elif line.startswith("print"):
             # print fizzbuzz
             variable_name = line.split(" ")[1]
             if variable_name not in variables:
-                Exception(f"Variable {variable_name} not defined")
+                raise Exception(f"Variable {variable_name} not defined")
             variable = variables[variable_name]
             # if variable is behind the pointer, move the pointer to the variable
             if variable["pointer"] > code_pointer:
@@ -96,13 +97,8 @@ def transpile(code):
                 bf_code += "<" * (code_pointer - variable["pointer"])
                 code_pointer = variable["pointer"]
             bf_code += "[.>]"
+            code_pointer += variable["length"]
 
-
-
-
-
-
-            
         elif line.startswith("if"):
             pass
         elif line.startswith("while"):

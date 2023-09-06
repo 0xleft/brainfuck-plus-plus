@@ -11,3 +11,10 @@ print buzz
 #set fizzbuzz str = fizz + buzz
 
 # if (three % 3 == 0) {print(fizz)}
+
+# input user_input str 10
+
+# print user_input
+
+print fizz
+print buzz
