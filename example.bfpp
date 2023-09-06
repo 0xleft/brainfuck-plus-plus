@@ -6,7 +6,7 @@ set one int = one + two
 var fizz str = "bingbongdingond"
 var buzz str = "Buzz"
 
-print fizz
+print two
 
 #set fizzbuzz str = fizz + buzz
 

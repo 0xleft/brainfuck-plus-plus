@@ -27,7 +27,7 @@ def transpile(code):
     code_pointer = 0
     variable_length = 0
     for line in code:
-
+        print(code_pointer, line)
 
 
 
@@ -106,14 +106,13 @@ def transpile(code):
                     code_pointer = variable["pointer"]
                 # if variable is in front of the pointer, move the pointer to the variable
                 elif variable["pointer"] < code_pointer:
-                    bf_code += "<" * (code_pointer - variable["pointer"])
+                    bf_code += "<" * (code_pointer - variable["pointer"] + 1)
                     code_pointer = variable["pointer"]
-                bf_code += "["
+                for i in range(variable["length"]):
+                    bf_code += ">."
+                    code_pointer += 1
                 bf_code += "<" * variable["length"]
-                bf_code += ">"
-                bf_code += "."
-                bf_code += ">" * variable["length"]
-                bf_code += "]"
+                code_pointer = variable["pointer"]
 
                 print(f"printing pointer {code_pointer} {variable}")
                 # adjust the pointer to the end of the string

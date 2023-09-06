@@ -6,3 +6,5 @@ Interpter
 
 Transpiler (TODO)
 `python3 transpiler.py example.bfpp`
+
+TODO optimize :)
