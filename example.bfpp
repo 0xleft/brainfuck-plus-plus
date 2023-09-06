@@ -1,12 +1,12 @@
 var one int = 55
 var two int = 55
 
-set one int = one + two
+set three int = one + two
 
-var fizz str = "bingbongdingond"
+var fizz str = "Fizz"
 var buzz str = "Buzz"
 
-print two
+print buzz
 
 #set fizzbuzz str = fizz + buzz
 

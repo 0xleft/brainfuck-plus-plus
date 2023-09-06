@@ -29,9 +29,6 @@ def transpile(code):
     for line in code:
         print(code_pointer, line)
 
-
-
-
         # define variable instruction
         if line.startswith("var"):
             # var variable_name variable_type = variable_init_value
@@ -47,10 +44,10 @@ def transpile(code):
                     "pointer": variable_length,
                     "length": 1
                 }
-                variable_length += 1
+                variable_length += 2
                 bf_code += "+" * int(variable_init_value)
-                bf_code += ">"
-                code_pointer += 1
+                bf_code += ">>"
+                code_pointer += 2
             elif variable_type == "str":
                 # remove the quotes from the string
                 if variable_init_value[0] != "\"" or variable_init_value[-1] != "\"":
@@ -61,13 +58,16 @@ def transpile(code):
                     "pointer": variable_length,
                     "length": len(variable_init_value),
                 }
-                variable_length += len(variable_init_value)
+                variable_length += len(variable_init_value) + 1
                 for char in variable_init_value:
                     bf_code += "+" * ord(char)
                     bf_code += ">"
                     code_pointer += 1
+                bf_code += ">"
+                code_pointer += 1
             else:
                 Exception(f"Invalid variable type {variable_type}")
+            print(f"{code_pointer} {line}")
 
         # expression instruction
         elif line.startswith("set"):
@@ -77,10 +77,8 @@ def transpile(code):
             expression = line.split(" = ")[1]
             expression = expression.split(" ")
 
-            if expression_return_variable in variables:
+            if expression_return_variable in variables.keys():
                 Exception(f"Variable {expression_return_variable} already defined")
-
-            Exception("Not implemented")
 
         # print variable instruction
         elif line.startswith("print"):
@@ -89,38 +87,26 @@ def transpile(code):
             if variable_name not in variables:
                 Exception(f"Variable {variable_name} not defined")
             variable = variables[variable_name]
-            if variable["type"] == "int":
-                # if variable is behind the pointer, move the pointer to the variable
-                if variable["pointer"] > code_pointer:
-                    bf_code += ">" * (variable["pointer"] - code_pointer)
-                    code_pointer = variable["pointer"]
-                # if variable is in front of the pointer, move the pointer to the variable
-                elif variable["pointer"] < code_pointer:
-                    bf_code += "<" * (code_pointer - variable["pointer"])
-                    code_pointer = variable["pointer"]
-                bf_code += "."
-            elif variable["type"] == "str":
-                # if variable is behind the pointer, move the pointer to the variable
-                if variable["pointer"] > code_pointer:
-                    bf_code += ">" * (variable["pointer"] - code_pointer)
-                    code_pointer = variable["pointer"]
-                # if variable is in front of the pointer, move the pointer to the variable
-                elif variable["pointer"] < code_pointer:
-                    bf_code += "<" * (code_pointer - variable["pointer"] + 1)
-                    code_pointer = variable["pointer"]
-                for i in range(variable["length"]):
-                    bf_code += ">."
-                    code_pointer += 1
-                bf_code += "<" * variable["length"]
+            # if variable is behind the pointer, move the pointer to the variable
+            if variable["pointer"] > code_pointer:
+                bf_code += ">" * (variable["pointer"] - code_pointer)
                 code_pointer = variable["pointer"]
+            # if variable is in front of the pointer, move the pointer to the variable
+            elif variable["pointer"] < code_pointer:
+                bf_code += "<" * (code_pointer - variable["pointer"])
+                code_pointer = variable["pointer"]
+            bf_code += "[.>]"
 
-                print(f"printing pointer {code_pointer} {variable}")
-                # adjust the pointer to the end of the string
-            else:
-                Exception(f"Invalid variable type {variable['type']}")
+
+
+
+
+
+            
         elif line.startswith("if"):
             pass
-            # execute the stuff inside the if statemend if the condition is true
+        elif line.startswith("while"):
+            pass
         else:
             Exception("Invalid instruction")
     
